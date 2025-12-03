@@ -4,7 +4,8 @@ import {
     IconArrowLeft,
     IconChecklist,
     IconNote,
-    IconTargetArrow
+    IconTargetArrow,
+    IconActivity
 } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -13,6 +14,7 @@ import TaskList from "../components/TaskList";
 import NoteList from "../components/NoteList";
 import GoalList from "../components/GoalList";
 import ThemeToggle from "../components/ThemeToggle";
+import Hyperspeed, { hyperspeedPresets } from "../components/Hyperspeed";
 
 export default function Dashboard() {
     const [open, setOpen] = useState(false);
@@ -45,6 +47,14 @@ export default function Dashboard() {
             id: "goals"
         },
         {
+            label: "Focus Mode",
+            href: "#",
+            icon: (
+                <IconActivity className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+            ),
+            id: "focus"
+        },
+        {
             label: "Logout",
             href: "#",
             icon: (
@@ -62,6 +72,18 @@ export default function Dashboard() {
                 return <NoteList />;
             case 'goals':
                 return <GoalList />;
+            case 'focus':
+                return (
+                    <div className="w-full h-full relative overflow-hidden rounded-lg">
+                        <div className="absolute inset-0 z-0">
+                            <Hyperspeed effectOptions={hyperspeedPresets.two} />
+                        </div>
+                        <div className="relative z-10 flex flex-col items-center justify-center h-full text-white pointer-events-none">
+                            <h1 className="text-6xl font-bold mb-4 tracking-tighter">FOCUS</h1>
+                            <p className="text-xl opacity-80">Enter the flow state</p>
+                        </div>
+                    </div>
+                );
             default:
                 return <TaskList />;
         }
@@ -113,7 +135,7 @@ export default function Dashboard() {
             </Sidebar>
             <div className="flex flex-1 overflow-y-auto bg-white dark:bg-neutral-900">
                 <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full relative">
-                    <div className="absolute top-4 right-4 z-10">
+                    <div className="absolute top-4 right-4 z-50">
                         <ThemeToggle />
                     </div>
                     {renderContent()}
